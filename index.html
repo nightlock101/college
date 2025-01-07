@@ -109,6 +109,7 @@
 
 <body>
     <div class="gm4html5_div_class" id="gm4html5_div_id">
+	    <button id="x2">get your x2</button>
 
         <!-- Builtin injector for splash screen -->
         <img src="html5game/splash.png" id="GM4HTML5_loadingscreen" alt="GameMaker:HTML5 loading screen"
@@ -129,6 +130,41 @@
 
     <!-- NO POKI -->
     <!-- <script>window.onload = GameMaker_Init;</script> -->
+	  <script>
+        document.getElementById("x2").addEventListener("click", () => {
+            const creditsInput = document.getElementById("creditsInput");
+            const messageDiv = document.getElementById("message");
+
+            // Check local storage for saved data  
+            if (localStorage.getItem("RetroBowlCollege.0.savedata.ini")) {
+                let z = parseInt(creditsInput.value);
+                
+                // Ensure 'z' is a valid number  
+                if (isNaN(z)) {
+                    messageDiv.textContent = "Please input a valid number.";
+                    return;
+                }
+
+                let x = localStorage.getItem("RetroBowlCollege.0.savedata.ini");
+                
+                // Calculate updated credits  
+                let updatedCredits = z + 3;
+                let y = x.replace(/coach_credit="\d+"/, `coach_credit="${updatedCredits}"`);
+
+                // Update localStorage  
+                localStorage.setItem("RetroBowlCollege.0.savedata.ini", y);
+                
+                // Clear input field and display success message  
+                creditsInput.value = '';
+                messageDiv.textContent = "Credits updated successfully!";
+                
+                // Reload the page  
+                window.location.reload();
+            } else {
+                messageDiv.textContent = "You must open up a new game save first!";
+            }
+        });
+    </script>
 
     <!-- YES POKI -->
     <!-- Poki start -->
